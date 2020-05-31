@@ -30,14 +30,20 @@ public class APIStepDefinitions {
         token = APIUtilities.getToken(role);
     }
 
-    @Given("user accepts content type as {string}")
-    public void user_accepts_content_type_as(String string) {
-        if (string.toLowerCase().contains("json")) {
+
+        @Given("user accepts content type as {string}")
+        public void user_accepts_content_type_as(String type) {
+
+        if (type.toLowerCase().contains("json")) {
             contentType = ContentType.JSON;
-        } else if (string.toLowerCase().contains("xml")) {
-            contentType = ContentType.XML;
-        } else if(string.toLowerCase().contains("html")){
-            contentType = ContentType.HTML;
+            if (type.toLowerCase().contains("xml")) {
+
+                contentType = ContentType.XML;
+            }
+            if (type.toLowerCase().contains("html")) {
+
+                contentType = ContentType.HTML;
+            }
         }
     }
 
@@ -59,8 +65,10 @@ public class APIStepDefinitions {
 
     @Then("user should be able to see all room names")
     public void user_should_be_able_to_see_all_room_names() {
+
+
         List<Room> rooms = response.jsonPath().getList("", Room.class);
-//        rooms.forEach(room -> System.out.println(room.getName()));
+    rooms.forEach(room -> System.out.println(room.getName()));
         for(Room room: rooms){
             System.out.println(room.getName());
         }
